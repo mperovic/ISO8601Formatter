@@ -2,10 +2,9 @@
 
 import Foundation
 
-
 final class ISO8601Formatter: NSFormatter {
 	enum ISO8601DateStyle: Int {
-		case CalendarLongStyle = 0		// Default (YYYY-MM-DD)
+		case CalendarLongStyle			// Default (YYYY-MM-DD)
 		case CalendarShortStyle			//         (YYYYMMDD)
 		case OrdinalLongStyle			//         (YYYY-DDD)
 		case OrdinalShortStyle			//         (YYYYDDD)
@@ -14,20 +13,20 @@ final class ISO8601Formatter: NSFormatter {
 	}
 	
 	enum ISO8601TimeStyle: Int {
-		case None = 0
+		case None
 		case LongStyle					// Default (hh:mm:ss)
 		case ShortStyle					//         (hhmmss)
 	}
 	
 	enum ISO8601TimeZoneStyle: Int {
-		case None = 0
+		case None
 		case UTC						// Default (Z)
 		case LongStyle					//         (±hh:mm)
 		case ShortStyle					//         (±hhmm)
 	}
 	
 	enum ISO8601FractionSeparator: Int {
-		case Comma = 0					// Default (,)
+		case Comma						// Default (,)
 		case Dot						//         (.)
 	}
 	
@@ -59,7 +58,7 @@ final class ISO8601Formatter: NSFormatter {
 		
 		super.init()
 	}
-
+	
 	required convenience init?(coder aDecoder: NSCoder) {
 		self.init(
 			dateStyle: .CalendarLongStyle,
@@ -123,7 +122,7 @@ final class ISO8601Formatter: NSFormatter {
 			return string
 		}
 		string = string + timeString
-
+		
 		if let timeZone = dateComponents.timeZone {
 			let timeZoneString: String
 			switch timeZoneStyle {
@@ -357,7 +356,7 @@ final class ISO8601Formatter: NSFormatter {
 		
 		timeZoneOffset = (timeZoneOffsetHour * 60 * 60) + (timeZoneOffsetMinute * 60)
 		dateComponents.timeZone = NSTimeZone(forSecondsFromGMT: timeZoneOffset * (sign == "-" ? -1 : 1))
-
+		
 		return gregorian.dateFromComponents(dateComponents)
 	}
 	
@@ -383,7 +382,7 @@ final class ISO8601Formatter: NSFormatter {
 			
 			return string
 		}
-
+		
 		var str: NSMutableString = NSMutableString(string: string)
 		switch self.dateStyle {
 		case .CalendarLongStyle:
@@ -441,7 +440,6 @@ extension NSDate {
 		return week
 	}
 }
-
 
 let formatter = ISO8601Formatter()
 formatter.timeStyle = .LongStyle
