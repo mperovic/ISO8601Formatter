@@ -445,11 +445,16 @@ let formatter = ISO8601Formatter()
 formatter.timeStyle = .LongStyle
 let date = formatter.dateFromString("2013-09-12T07:24:56+04:00")!
 
-let formatter2 = ISO8601Formatter()
-formatter2.dateStyle = .CalendarLongStyle
-formatter2.timeStyle = .LongStyle
-formatter2.timeZoneStyle = .LongStyle
-let string = formatter2.stringFromDate(date)
+
+let date2 = ISO8601Formatter().dateFromString("2013-09-12T07:24:56+04:00")!
+
+let string = ISO8601Formatter().stringFromDate(date)
+
+//let formatter2 = ISO8601Formatter()
+//formatter2.dateStyle = .CalendarLongStyle
+//formatter2.timeStyle = .LongStyle
+//formatter2.timeZoneStyle = .LongStyle
+//let string = formatter2.stringFromDate(date)
 
 print(string)
 
