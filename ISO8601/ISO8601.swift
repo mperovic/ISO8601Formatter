@@ -76,8 +76,12 @@ final class ISO8601Formatter: NSFormatter {
 	}
 	
 	func stringFromDate(date: NSDate) -> String? {
-		let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-		let dateComponents = gregorian.components(
+		let calendar = NSCalendar.currentCalendar()
+		if timeZoneStyle == .UTC {
+			calendar.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+		}
+
+		let dateComponents = calendar.components(
 			[.Year, .Month, .Day, .WeekOfYear, .Hour, .Minute, .Second, .Weekday, .WeekdayOrdinal, .WeekOfYear, .YearForWeekOfYear, .TimeZone],
 			fromDate: date
 		)

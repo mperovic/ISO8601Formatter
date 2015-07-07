@@ -70,11 +70,15 @@ final class ISO8601Formatter: NSFormatter {
 	}
 	
 	func stringFromDate(date: NSDate) -> String? {
-		let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-		let dateComponents = gregorian.components(
+		let calendar = NSCalendar.currentCalendar()
+		if timeZoneStyle == .UTC {
+			calendar.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+		}
+		let dateComponents = calendar.components(
 			[.Year, .Month, .Day, .WeekOfYear, .Hour, .Minute, .Second, .Weekday, .WeekdayOrdinal, .WeekOfYear, .YearForWeekOfYear, .TimeZone],
 			fromDate: date
 		)
+		print(dateComponents)
 		var string: String
 		
 		if dateComponents.year < 0 || dateComponents.year > 9999 {
@@ -441,14 +445,17 @@ extension NSDate {
 	}
 }
 
+let indigoDate = NSDate(timeIntervalSince1970: 1436260803.069)
 let formatter = ISO8601Formatter()
-formatter.timeStyle = .LongStyle
-let date = formatter.dateFromString("2013-09-12T07:24:56+04:00")!
+formatter.fractionSeparator = .Dot
+print(formatter.stringFromDate(indigoDate))
+
+let date = formatter.dateFromString("2011-02-27T11:03:06+09:00")
 
 
-let date2 = ISO8601Formatter().dateFromString("2013-09-12T07:24:56+04:00")!
+let date2 = ISO8601Formatter().dateFromString("2013-09-12T07:24:56+04:00")
 
-let string = ISO8601Formatter().stringFromDate(date)
+let string = ISO8601Formatter().stringFromDate(date!)
 
 //let formatter2 = ISO8601Formatter()
 //formatter2.dateStyle = .CalendarLongStyle
@@ -458,6 +465,6 @@ let string = ISO8601Formatter().stringFromDate(date)
 
 print(string)
 
-print(date.isLeapYear())
-print(date.dayOfYear())
-print(date.weekOfYear())
+//print(date.isLeapYear())
+//print(date.dayOfYear())
+//print(date.weekOfYear())
